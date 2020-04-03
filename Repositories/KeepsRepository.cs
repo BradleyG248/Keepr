@@ -6,24 +6,56 @@ using Dapper;
 
 namespace Keepr.Repositories
 {
-    public class KeepsRepository
+  public class KeepsRepository
+  {
+    private readonly IDbConnection _db;
+
+    public KeepsRepository(IDbConnection db)
     {
-        private readonly IDbConnection _db;
-
-        public KeepsRepository(IDbConnection db)
-        {
-            _db = db;
-        }
-
-        internal IEnumerable<Keep> Get()
-        {
-            string sql = "SELECT * FROM Keeps WHERE isPrivate = 0;";
-            return _db.Query<Keep>(sql);
-        }
-
-        internal Keep Create(Keep KeepData)
-        {
-            throw new NotImplementedException();
-        }
+      _db = db;
     }
+
+    internal IEnumerable<Keep> Get()
+    {
+      string sql = "SELECT * FROM keeps WHERE isPrivate = 0";
+      IEnumerable<Keep> keep = _db.Query<Keep>(sql);
+      return keep;
+    }
+    internal Keep Get(int Id)
+    {
+      string sql = "SELECT * FROM keeps WHERE id = @Id";
+      return _db.QueryFirstOrDefault<Keep>(sql, new { Id });
+    }
+
+    internal Keep Create(Keep KeepData)
+    {
+      string sql = @"
+            INSERT INTO keeps
+            (name, description, userId, img, isPrivate)
+            VALUES
+            (@Name, @Description, @UserId, @Img, @IsPrivate);
+            SELECT LAST_INSERT_ID();
+            ";
+      KeepData.Id = _db.ExecuteScalar<int>(sql, KeepData);
+      return KeepData;
+    }
+    internal void Edit(Keep EditedKeep)
+    {
+      string sql = @"
+        UPDATE keeps
+        SET
+            name = @Name
+            description = @Description
+            img = @Img
+        WHERE id = @Id;
+        ";
+      _db.Execute(sql, EditedKeep);
+    }
+    internal bool Delete(int Id)
+    {
+      string sql = "DELETE FROM keeps WHERE id = @Id LIMIT 1";
+      int deleted = _db.Execute(sql, new { Id });
+      return deleted == 1;
+    }
+  }
 }

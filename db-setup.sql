@@ -1,4 +1,4 @@
--- USE keepr13;
+USE consolelibrary1;
 
 -- CREATE TABLE vaults (
 --     id int NOT NULL AUTO_INCREMENT,
@@ -58,3 +58,5 @@
 -- DROP TABLE IF EXISTS vaults;
 -- DROP TABLE IF EXISTS keeps;
 -- DROP TABLE IF EXISTS users;
+
+-- SELECT * FROM keeps WHERE isPrivate != NULL
