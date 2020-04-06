@@ -17,16 +17,21 @@ namespace Keepr.Services
     {
       return _repo.Get();
     }
-    public Keep Get(int Id, string userId)
+    public Keep Get(int Id)
     {
       Keep keep = _repo.Get(Id);
       if (keep == null)
       {
         throw new Exception("Keep not found");
       }
-      if (keep.IsPrivate == true && keep.UserId != userId)
+      return keep;
+    }
+    public Keep AuthGet(int Id, string UserId)
+    {
+      Keep keep = _repo.AuthGet(Id, UserId);
+      if (keep == null)
       {
-        throw new Exception("That's not your keep.");
+        throw new Exception("Keep not found");
       }
       return keep;
     }
@@ -37,7 +42,7 @@ namespace Keepr.Services
     }
     public Keep Edit(Keep EditedKeep)
     {
-      Keep original = Get(EditedKeep.Id, EditedKeep.UserId);
+      Keep original = AuthGet(EditedKeep.Id, EditedKeep.UserId);
       original.Name = EditedKeep.Name != null ? EditedKeep.Name : original.Name;
       original.Description = EditedKeep.Description != null ? EditedKeep.Description : original.Description;
       original.Img = EditedKeep.Img != null ? EditedKeep.Img : original.Img;
@@ -46,11 +51,6 @@ namespace Keepr.Services
     }
     public string Delete(int Id, string UserId)
     {
-      Keep keep = Get(Id, UserId);
-      //   if (keep.UserId != UserId)
-      //   {
-      //     throw new Exception("That's not your keep.");
-      //   }
       if (_repo.Delete(Id))
       {
         return "Deleted.";

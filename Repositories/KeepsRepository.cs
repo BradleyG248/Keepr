@@ -23,8 +23,14 @@ namespace Keepr.Repositories
     }
     internal Keep Get(int Id)
     {
-      string sql = "SELECT * FROM keeps WHERE id = @Id";
+      string sql = "SELECT * FROM keeps WHERE (id = @Id AND isPrivate = 0)";
       return _db.QueryFirstOrDefault<Keep>(sql, new { Id });
+    }
+    internal Keep AuthGet(int Id, string UserId)
+    {
+      string sql = "SELECT * FROM keeps WHERE (id = @Id AND userId = @UserId)";
+      Keep keep = _db.QueryFirstOrDefault<Keep>(sql, new { Id, UserId });
+      return keep;
     }
 
     internal Keep Create(Keep KeepData)
@@ -44,9 +50,13 @@ namespace Keepr.Repositories
       string sql = @"
         UPDATE keeps
         SET
-            name = @Name
-            description = @Description
-            img = @Img
+            name = @Name,
+            description = @Description,
+            img = @Img,
+            views = @Views,
+            keeps = @Keeps,
+            shares = @Shares,
+            isPrivate = @IsPrivate
         WHERE id = @Id;
         ";
       _db.Execute(sql, EditedKeep);
