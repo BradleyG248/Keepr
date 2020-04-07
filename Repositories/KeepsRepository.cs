@@ -32,6 +32,12 @@ namespace Keepr.Repositories
       Keep keep = _db.QueryFirstOrDefault<Keep>(sql, new { Id, UserId });
       return keep;
     }
+    internal IEnumerable<Keep> GetKeepsByUser(string UserId)
+    {
+      string sql = "SELECT * FROM keeps WHERE userId = @UserId";
+      IEnumerable<Keep> keeps = _db.Query<Keep>(sql, new { UserId });
+      return keeps;
+    }
 
     internal Keep Create(Keep KeepData)
     {

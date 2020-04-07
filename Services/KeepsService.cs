@@ -35,6 +35,15 @@ namespace Keepr.Services
       }
       return keep;
     }
+    public IEnumerable<Keep> GetKeepsByUser(string UserId)
+    {
+      IEnumerable<Keep> keeps = _repo.GetKeepsByUser(UserId);
+      if (keeps == null)
+      {
+        throw new Exception("No keeps found");
+      }
+      return keeps;
+    }
 
     public Keep Create(Keep newKeep)
     {

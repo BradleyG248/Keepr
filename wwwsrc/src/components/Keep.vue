@@ -1,6 +1,6 @@
 <template>
-  <div class="rounded border border-primary bg-secondary">
-    <img class="img-fluid rounded-top" :src="keepData.img" alt />
+  <div class="rounded mb-1 p-1 bg-dark text-light d-flex flex-column align-items-center">
+    <img class="img-fluid rounded" :src="keepData.img" alt />
     <div>
       <h4>{{keepData.name}}</h4>
       <p>{{keepData.description}}</p>
@@ -12,3 +12,5 @@ export default {
   props: ["keepData"]
 };
 </script>
+<style scoped>
+</style>

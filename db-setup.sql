@@ -41,6 +41,13 @@ USE consolelibrary1;
 --         REFERENCES keeps(id)
 --         ON DELETE CASCADE
 -- )
+-- CREATE TABLE profiles (
+--   userId VARCHAR(255) NOT NULL,
+--   name VARCHAR(255) NOT NULL,
+--   email VARCHAR(255) NOT NULL,
+--   img VARCHAR(255),
+--   PRIMARY KEY (userId)
+-- )
 
 
 -- -- USE THIS LINE FOR GET KEEPS BY VAULTID

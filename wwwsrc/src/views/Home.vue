@@ -5,8 +5,8 @@
         <h1>Welcome Home</h1>
       </div>
     </div>
-    <div class="row">
-      <div class="col-4" v-for="keep in keeps" :key="keep._id">
+    <div class="grid row">
+      <div class="grid-item col-6 col-md-3" v-for="keep in keeps" :key="keep._id">
         <keep :keepData="keep" />
       </div>
     </div>
