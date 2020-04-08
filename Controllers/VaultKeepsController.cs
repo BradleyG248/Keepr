@@ -16,9 +16,11 @@ namespace Keepr.Controllers
   public class VaultKeepsController : ControllerBase
   {
     private readonly VaultKeepsService _vks;
-    public VaultKeepsController(VaultKeepsService vks)
+    private readonly KeepsService _ks;
+    public VaultKeepsController(VaultKeepsService vks, KeepsService ks)
     {
       _vks = vks;
+      _ks = ks;
     }
     [HttpGet]
     [Authorize]
@@ -57,7 +59,9 @@ namespace Keepr.Controllers
       {
         var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         newVaultKeep.UserId = userId;
-        return Ok(_vks.Create(newVaultKeep));
+        VaultKeep newVK = _vks.Create(newVaultKeep);
+        _ks.Keep(newVK.KeepId);
+        return Ok(newVK);
       }
       catch (Exception e)
       {

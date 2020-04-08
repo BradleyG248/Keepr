@@ -32,6 +32,16 @@ namespace Keepr.Repositories
       Keep keep = _db.QueryFirstOrDefault<Keep>(sql, new { Id, UserId });
       return keep;
     }
+    internal void AddKeep(int Id)
+    {
+      string sql = @"
+        UPDATE keeps
+        SET
+            keeps = keeps+1
+        WHERE id = @Id;
+        ";
+        _db.Execute(sql, new{Id});
+    }
     internal IEnumerable<Keep> GetKeepsByUser(string UserId)
     {
       string sql = "SELECT * FROM keeps WHERE userId = @UserId";

@@ -26,6 +26,10 @@ namespace Keepr.Services
       }
       return keep;
     }
+    public void Keep(int KeepId)
+    {
+      _repo.AddKeep(KeepId);
+    }
     public Keep AuthGet(int Id, string UserId)
     {
       Keep keep = _repo.AuthGet(Id, UserId);
