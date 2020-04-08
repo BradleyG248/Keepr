@@ -23,7 +23,7 @@ namespace Keepr.Repositories
     }
     internal Keep Get(int Id)
     {
-      string sql = "SELECT * FROM keeps WHERE (id = @Id AND isPrivate = 0)";
+      string sql = "SELECT * FROM keeps WHERE id = @Id";
       return _db.QueryFirstOrDefault<Keep>(sql, new { Id });
     }
     internal Keep AuthGet(int Id, string UserId)

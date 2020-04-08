@@ -51,7 +51,11 @@ namespace Keepr.Services
     }
     public Keep Edit(Keep EditedKeep)
     {
-      Keep original = AuthGet(EditedKeep.Id, EditedKeep.UserId);
+      Keep original = Get(EditedKeep.Id);
+      if (EditedKeep.UserId != original.UserId)
+      {
+        throw new Exception("That's not your keep");
+      }
       original.Name = EditedKeep.Name != null ? EditedKeep.Name : original.Name;
       original.Description = EditedKeep.Description != null ? EditedKeep.Description : original.Description;
       original.Img = EditedKeep.Img != null ? EditedKeep.Img : original.Img;

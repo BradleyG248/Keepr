@@ -26,37 +26,20 @@
 </template>
 
 <script>
-import keep from "../components/Keep";
-import edit from "../components/EditProfile";
 export default {
-  mounted() {
-    this.$store.dispatch("getProfile");
-    this.$store.dispatch("getUserKeeps");
-  },
+  mounted() {},
   computed: {
     profile() {
       return this.$store.state.profile;
     },
-    keeps() {
-      return this.$store.state.userKeeps;
+    vaults() {
+      return this.$store.state.vaults;
     }
   },
-  methods: {
-    async editProfile() {
-      if (this.editedProfile) {
-        await this.$store.dispatch("editProfile", this.editedProfile);
-        this.editedProfile = {};
-        this.form = false;
-      }
-    }
-  },
-  components: {
-    keep,
-    edit
-  },
+  methods: {},
+  components: {},
   data() {
     return {
-      editedProfile: {},
       form: false
     };
   }

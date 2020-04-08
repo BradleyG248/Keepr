@@ -40,7 +40,8 @@ namespace Keepr.Repositories
         UPDATE profiles
         SET
             name = @Name,
-            img = @Img
+            img = @Img,
+            email = @Email
         WHERE userId = @UserId;
         ";
       _db.Execute(sql, EditedProfile);
