@@ -50,6 +50,7 @@ export default {
       return this.$store.state.profile;
     },
     keeps() {
+      console.log(this.$store.state.userKeeps);
       return this.$store.state.userKeeps;
     },
     vaults() {

@@ -24,18 +24,22 @@
       <button class="btn btn-warning mx-1" @click="form=!form">Edit</button>
     </div>
     </div>
+    <div v-show="$route.name == 'vault'">
+      <button class="btn btn-primary" @click="removeKeepVault()">
+        Remove
+      </button>
+    </div>
     <div v-show="$route.name == 'home'">
       <button class="btn btn-primary">Share</button>
       <button
       type="button"
       class="btn btn-primary"
       data-toggle="modal"
-      data-target="#editProfile"
+      :data-target="'#editKeep' + keepData.id"
     >Keep</button>
-
     <div
       class="modal fade"
-      id="editProfile"
+      :id="'editKeep' + keepData.id"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -44,6 +48,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body d-flex justify-content-center">
+            <h5>{{this.keep.name}}</h5>
             <form class="d-flex flex-column align-items-center w-100">
               <select v-model="vault" class="btn btn-primary text-light mb-3" name="vaults" id="vault-select">
                 <option selected value="">No Vault</option>
@@ -85,7 +90,8 @@ export default {
         description: this.keepData.description,
         id: this.keepData.id
       },
-      vault:null
+      vault:null,
+      keep:{}
     };
   },
   methods: {
@@ -105,13 +111,15 @@ export default {
     },
     async setVault(){
       if(this.vault){
-        console.log(this.keepData);
-        // await this.$store.dispatch("setKeepVault", {keepId:this.keepData.id, vaultId:this.vault});
-        // this.vault = null;
+        await this.$store.dispatch("setKeepVault", {keepId:this.keepData.id, vaultId:this.vault});
+        this.vault = null;
       }
     },
     remove(){
       this.$store.dispatch("deleteKeep", this.keepData.id);
+    },
+    removeKeepVault(){
+      this.$store.dispatch("deleteKeepVault", {keepId:this.keepData.id, vaultKeepId:this.keepData.vaultKeepId});
     }
   }
 };

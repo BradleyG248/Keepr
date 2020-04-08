@@ -29,6 +29,7 @@ USE consolelibrary1;
 --     keepId int NOT NULL,
 --     userId VARCHAR(255) NOT NULL,
 
+
 --     PRIMARY KEY (id),
 --     INDEX (vaultId, keepId),
 --     INDEX (userId),
@@ -41,6 +42,10 @@ USE consolelibrary1;
 --         REFERENCES keeps(id)
 --         ON DELETE CASCADE
 -- )
+    -- ALTER TABLE vaultkeeps
+    -- ADD UNIQUE(vaultId, keepId)
+
+
 -- CREATE TABLE profiles (
 --   userId VARCHAR(255) NOT NULL,
 --   name VARCHAR(255) NOT NULL,

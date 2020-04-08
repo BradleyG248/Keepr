@@ -94,8 +94,11 @@ export default new Vuex.Store({
       commit("editPublicKeeps", res.data);
     },
     async setKeepVault({commit},dict){
-      console.log(dict);
       await api.post("vaultkeeps", dict);
+    },
+    async deleteKeepVault({commit}, dict){
+      await api.delete(`vaultkeeps/${dict.vaultKeepId}`);
+      commit("deleteKeep", dict.keepId);
     },
     async createKeep({commit}, keep){
       let res = await api.post("keeps", keep);
