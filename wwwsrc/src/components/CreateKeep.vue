@@ -2,14 +2,14 @@
   <div>
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-primary mb-3"
       data-toggle="modal"
-      data-target="#editProfile"
-    >Edit Profile</button>
+      data-target="#createKeep"
+    >Create Keep</button>
 
     <div
       class="modal fade"
-      id="editProfile"
+      id="createKeep"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -18,40 +18,37 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Create Keep</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <form>
-              <h5 class="">Username</h5>
               <input
                 class="form-control"
-                v-model="editedProfile.name"
-                placeholder="Username"
+                v-model="newKeep.name"
+                placeholder="Title"
                 type="text"
               />
-              <h5 class="mt-2">Email</h5>
               <input
                 class="form-control"
-                v-model="editedProfile.email"
-                placeholder="Email"
+                v-model="newKeep.description"
+                placeholder="Description"
                 type="text"
               />
-              <h5 class="mt-2">Image</h5>
               <input
                 class="form-control"
-                v-model="editedProfile.img"
-                placeholder="Image link"
+                v-model="newKeep.img"
+                placeholder="Image URL"
                 type="text"
               />
               <button
                 type="submit"
-                class="btn btn-warning mt-2"
+                class="btn btn-warning"
                 data-dismiss="modal"
-                @click.prevent="editProfile()"
-              >Submit Changes</button>
+                @click.prevent="createKeep()"
+              >Create</button>
             </form>
           </div>
           <div class="modal-footer">
@@ -64,24 +61,15 @@
 </template>
 <script>
 export default {
-  props:["profile"],
   data() {
     return {
-      editedProfile: {
-       name:this.profile.name,
-       email:this.profile.email,
-       img:this.profile.img
-      }
+      newKeep: {}
     };
   },
   methods: {
-    async editProfile() {
-      await this.$store.dispatch("editProfile", this.editedProfile);
-      this.editedProfile = {
-       name:this.profile.name,
-       email:this.profile.email,
-       img:this.profile.img
-      };
+    async createKeep() {
+      await this.$store.dispatch("createKeep", this.newKeep);
+      this.newKeep = {};
     }
   }
 };

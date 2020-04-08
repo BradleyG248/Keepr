@@ -9,27 +9,23 @@
             <p>{{profile.email}}</p>
           </div>
         </div>
-        <edit class="align-self-start" />
+        <edit :profile="profile" class="align-self-start" />
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-12 d-flex text-center justify-content-around">
         <h2 class="clicker" @click="keep = true">Your Keeps</h2>
+        <kcreate v-if="keep" />
+        <vcreate v-if="!keep" />
         <h2 class="clicker" @click="keep = false">Your Vaults</h2>
       </div>
     </div>
     <div v-if="keep" class="row">
-      <div class="col-12">
-        <h2>Create Keep</h2>
-      </div>
-      <div class="col-6 col-md-3" v-for="keep in keeps" :key="keep._id">
-        <keep :keepData="keep" />
+      <div class="col-6 col-md-3" v-for="keep in keeps" :key="keep.id">
+        <keep :keepData="keep" :keepId="keep.id" />
       </div>
     </div>
     <div v-else class="row">
-      <div class="col-12">
-        <h3>Create Vault</h3>
-      </div>
       <div class="col-12 col-md-6" v-for="vault in vaults" :key="vault.id">
         <vault :vaultData="vault" />
       </div>
@@ -41,6 +37,8 @@
 import keep from "../components/Keep";
 import edit from "../components/EditProfile";
 import vault from "../components/Vault";
+import kcreate from "../components/CreateKeep";
+import vcreate from "../components/CreateVault";
 export default {
   mounted() {
     this.$store.dispatch("getProfile");
@@ -70,7 +68,9 @@ export default {
   components: {
     keep,
     edit, 
-    vault
+    vault,
+    kcreate,
+    vcreate
   },
   data() {
     return {

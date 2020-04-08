@@ -20,7 +20,8 @@ export default new Vuex.Store({
     profile: {},
     publicKeeps: [],
     userKeeps: [],
-    vaults: []
+    vaults: [],
+    activeVault:{}
   },
   mutations: {
     setPublicKeeps(state, keeps) {
@@ -28,9 +29,6 @@ export default new Vuex.Store({
     },
     setUserKeeps(state, keeps) {
       state.userKeeps = keeps;
-    },
-    addKeep(state, keep) {
-      state.publicKeeps.push(keep);
     },
     editUserKeeps(state, keep) {
       let index = state.userKeeps.findIndex(k => k.id == keep.id);
@@ -40,12 +38,19 @@ export default new Vuex.Store({
       let index = state.publicKeeps.findIndex(k => k.id == keep.id);
       state.publicKeeps[index] = keep;
     },
+    addKeep(state, keep) {
+      state.publicKeeps.push(keep);
+      state.userKeeps.push(keep);
+    },
     deleteKeep(state, keepId) {
-      let index = state.publicKeeps.findIndex(k => k.id == keepId);
-      state.publicKeeps.splice(index, 1);
+      state.publicKeeps = state.publicKeeps.filter(k => k.id != keepId);
+      state.userKeeps = state.userKeeps.filter(k => k.id != keepId);
     },
     setVaults(state, vaults) {
       state.vaults = vaults;
+    },
+    setActiveVault(state, vault){
+      state.activeVault = vault;
     },
     addVault(state, vault) {
       state.vaults.push(vault);
@@ -55,8 +60,7 @@ export default new Vuex.Store({
       state.vaults[index] = vault;
     },
     deleteVault(state, vaultId) {
-      let index = state.vaults.findIndex(k => k.id == vaultId);
-      state.vaults.splice(index, 1);
+      state.vaults = state.vaults.filter(v=>v.id != vaultId);
     },
     setProfile(state, profile) {
       state.profile = profile;
@@ -77,6 +81,10 @@ export default new Vuex.Store({
       let keeps = await api.get("profile/keeps");
       commit("setUserKeeps", keeps.data);
     },
+    async getKeepsByVault({commit}, vaultId){
+      let res = await api.get(`vaults/${vaultId}/keeps`);
+      commit("setUserKeeps", res.data);
+    },
     async editUserKeep({ commit }, keep) {
       let res = await api.put(`keeps/${keep.id}`, keep);
       commit("editUserKeeps", res.data);
@@ -85,13 +93,37 @@ export default new Vuex.Store({
       let res = await api.put(`keeps/${keep.id}`, keep);
       commit("editPublicKeeps", res.data);
     },
+    async setKeepVault({commit},dict){
+      console.log(dict);
+      await api.post("vaultkeeps", dict);
+    },
+    async createKeep({commit}, keep){
+      let res = await api.post("keeps", keep);
+      commit("addKeep", res.data);
+    },
+    async deleteKeep({commit},keepId){
+      await api.delete(`keeps/${keepId}`);
+      commit("deleteKeep", keepId);
+    },
     async getVaults({commit}){
       let res = await api.get("vaults");
       commit("setVaults", res.data);
     },
+    async getVaultById({commit}, vaultId){
+      let res = await api.get(`vaults/${vaultId}`);
+      commit("setActiveVault", res.data);
+    },
     async editVault({commit}, vault){
       let res = await api.put(`vaults/${vault.id}`, vault);
       commit("editVault", res.data);
+    },
+    async createVault({commit}, vault){
+      let res = await api.post("vaults", vault);
+      commit("addVault", res.data);
+    },
+    async deleteVault({commit},vaultId){
+      await api.delete(`vaults/${vaultId}`);
+      commit("deleteVault", vaultId);
     },
     async getProfile({ commit }) {
       let profile = await api.get("profile");

@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col-6 col-md-3" v-for="keep in keeps" :key="keep._id">
-        <keep :keepData="keep" />
+        <keep :keepData="keep" :keepId="keep.id" />
       </div>
     </div>
   </div>
@@ -32,6 +32,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getKeeps");
+    this.$store.dispatch("getVaults");
   },
   components: {
     keep
