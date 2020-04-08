@@ -13,13 +13,25 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 text-center">
-        <h2>Your Keeps</h2>
+      <div class="col-12 d-flex text-center justify-content-around">
+        <h2 class="clicker" @click="keep = true">Your Keeps</h2>
+        <h2 class="clicker" @click="keep = false">Your Vaults</h2>
       </div>
     </div>
-    <div class="row">
-      <div class="grid-item col-6 col-md-3" v-for="keep in keeps" :key="keep._id">
+    <div v-if="keep" class="row">
+      <div class="col-12">
+        <h2>Create Keep</h2>
+      </div>
+      <div class="col-6 col-md-3" v-for="keep in keeps" :key="keep._id">
         <keep :keepData="keep" />
+      </div>
+    </div>
+    <div v-else class="row">
+      <div class="col-12">
+        <h3>Create Vault</h3>
+      </div>
+      <div class="col-12 col-md-6" v-for="vault in vaults" :key="vault.id">
+        <vault :vaultData="vault" />
       </div>
     </div>
   </div>
@@ -28,10 +40,12 @@
 <script>
 import keep from "../components/Keep";
 import edit from "../components/EditProfile";
+import vault from "../components/Vault";
 export default {
   mounted() {
     this.$store.dispatch("getProfile");
     this.$store.dispatch("getUserKeeps");
+    this.$store.dispatch("getVaults");
   },
   computed: {
     profile() {
@@ -39,6 +53,9 @@ export default {
     },
     keeps() {
       return this.$store.state.userKeeps;
+    },
+    vaults() {
+      return this.$store.state.vaults;
     }
   },
   methods: {
@@ -52,12 +69,14 @@ export default {
   },
   components: {
     keep,
-    edit
+    edit, 
+    vault
   },
   data() {
     return {
       editedProfile: {},
-      form: false
+      form: false,
+      keep:true
     };
   }
 };
@@ -66,5 +85,8 @@ export default {
 <style scoped>
 img.profile {
   max-height: 10rem;
+}
+div h2.clicker:hover{
+  cursor: pointer;
 }
 </style>>

@@ -33,7 +33,6 @@ export default new Vuex.Store({
       state.publicKeeps.push(keep);
     },
     editUserKeeps(state, keep) {
-      debugger;
       let index = state.userKeeps.findIndex(k => k.id == keep.id);
       state.userKeeps[index] = keep;
     },
@@ -54,7 +53,6 @@ export default new Vuex.Store({
     editVault(state, vault) {
       let index = state.vaults.findIndex(v => v.id == vault.id);
       state.vaults[index] = vault;
-
     },
     deleteVault(state, vaultId) {
       let index = state.vaults.findIndex(k => k.id == vaultId);
@@ -86,6 +84,14 @@ export default new Vuex.Store({
     async editPublicKeep({ commit }, keep) {
       let res = await api.put(`keeps/${keep.id}`, keep);
       commit("editPublicKeeps", res.data);
+    },
+    async getVaults({commit}){
+      let res = await api.get("vaults");
+      commit("setVaults", res.data);
+    },
+    async editVault({commit}, vault){
+      let res = await api.put(`vaults/${vault.id}`, vault);
+      commit("editVault", res.data);
     },
     async getProfile({ commit }) {
       let profile = await api.get("profile");
