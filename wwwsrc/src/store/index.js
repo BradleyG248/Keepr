@@ -21,7 +21,9 @@ export default new Vuex.Store({
     publicKeeps: [],
     userKeeps: [],
     vaults: [],
-    activeVault:{}
+    activeVault: {},
+    activeKeep: {},
+    activeProfile: {}
   },
   mutations: {
     setPublicKeeps(state, keeps) {
@@ -29,6 +31,9 @@ export default new Vuex.Store({
     },
     setUserKeeps(state, keeps) {
       state.userKeeps = keeps;
+    },
+    setActiveKeep(state, keep) {
+      state.activeKeep = keep;
     },
     editUserKeeps(state, keep) {
       let index = state.userKeeps.findIndex(k => k.id == keep.id);
@@ -49,7 +54,7 @@ export default new Vuex.Store({
     setVaults(state, vaults) {
       state.vaults = vaults;
     },
-    setActiveVault(state, vault){
+    setActiveVault(state, vault) {
       state.activeVault = vault;
     },
     addVault(state, vault) {
@@ -60,10 +65,13 @@ export default new Vuex.Store({
       state.vaults[index] = vault;
     },
     deleteVault(state, vaultId) {
-      state.vaults = state.vaults.filter(v=>v.id != vaultId);
+      state.vaults = state.vaults.filter(v => v.id != vaultId);
     },
     setProfile(state, profile) {
       state.profile = profile;
+    },
+    setActiveProfile(state, profile) {
+      state.activeProfile = profile;
     }
   },
   actions: {
@@ -77,11 +85,15 @@ export default new Vuex.Store({
       let keeps = await api.get("keeps");
       commit("setPublicKeeps", keeps.data);
     },
+    async getKeepById({ commit }, keepId) {
+      let keep = await api.get(`keeps/${keepId}`);
+      commit("setActiveKeep", keep.data);
+    },
     async getUserKeeps({ commit }) {
       let keeps = await api.get("profile/keeps");
       commit("setUserKeeps", keeps.data);
     },
-    async getKeepsByVault({commit}, vaultId){
+    async getKeepsByVault({ commit }, vaultId) {
       let res = await api.get(`vaults/${vaultId}/keeps`);
       commit("setUserKeeps", res.data);
     },
@@ -93,44 +105,48 @@ export default new Vuex.Store({
       let res = await api.put(`keeps/${keep.id}`, keep);
       commit("editPublicKeeps", res.data);
     },
-    async setKeepVault({commit},dict){
+    async setKeepVault({ commit }, dict) {
       await api.post("vaultkeeps", dict);
     },
-    async deleteKeepVault({commit}, dict){
+    async deleteKeepVault({ commit }, dict) {
       await api.delete(`vaultkeeps/${dict.vaultKeepId}`);
       commit("deleteKeep", dict.keepId);
     },
-    async createKeep({commit}, keep){
+    async createKeep({ commit }, keep) {
       let res = await api.post("keeps", keep);
       commit("addKeep", res.data);
     },
-    async deleteKeep({commit},keepId){
+    async deleteKeep({ commit }, keepId) {
       await api.delete(`keeps/${keepId}`);
       commit("deleteKeep", keepId);
     },
-    async getVaults({commit}){
+    async getVaults({ commit }) {
       let res = await api.get("vaults");
       commit("setVaults", res.data);
     },
-    async getVaultById({commit}, vaultId){
+    async getVaultById({ commit }, vaultId) {
       let res = await api.get(`vaults/${vaultId}`);
       commit("setActiveVault", res.data);
     },
-    async editVault({commit}, vault){
+    async editVault({ commit }, vault) {
       let res = await api.put(`vaults/${vault.id}`, vault);
       commit("editVault", res.data);
     },
-    async createVault({commit}, vault){
+    async createVault({ commit }, vault) {
       let res = await api.post("vaults", vault);
       commit("addVault", res.data);
     },
-    async deleteVault({commit},vaultId){
+    async deleteVault({ commit }, vaultId) {
       await api.delete(`vaults/${vaultId}`);
       commit("deleteVault", vaultId);
     },
     async getProfile({ commit }) {
       let profile = await api.get("profile");
       commit("setProfile", profile.data);
+    },
+    async getProfileById({ commit }, userId) {
+      let profile = await api.get(`profile/${userId}`);
+      commit("setActiveProfile", profile.data);
     },
     async editProfile({ commit }, newProfile) {
       let profile = await api.put("profile", newProfile);

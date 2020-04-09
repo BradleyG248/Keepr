@@ -3649,11 +3649,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\source\\codeworks\\Keepr\\keepr.csproj",
+      "projectUniqueName": "C:\\source\\codeworks\\keepr\\keepr.csproj",
       "projectName": "keepr",
-      "projectPath": "C:\\source\\codeworks\\Keepr\\keepr.csproj",
+      "projectPath": "C:\\source\\codeworks\\keepr\\keepr.csproj",
       "packagesPath": "C:\\Users\\calvi\\.nuget\\packages\\",
-      "outputPath": "C:\\source\\codeworks\\Keepr\\obj\\",
+      "outputPath": "C:\\source\\codeworks\\keepr\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\calvi\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -3709,7 +3709,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

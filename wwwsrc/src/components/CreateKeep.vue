@@ -24,25 +24,32 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form class="d-flex flex-column align-items-center">
+              <h2>Title</h2>
               <input
-                class="form-control"
+                class="form-control mb-2"
                 v-model="newKeep.name"
                 placeholder="Title"
                 type="text"
               />
+              <h2>Description</h2>
               <input
-                class="form-control"
+                class="form-control mb-2"
                 v-model="newKeep.description"
                 placeholder="Description"
                 type="text"
               />
+              <h2>Image</h2>
               <input
-                class="form-control"
+                class="form-control mb-2"
                 v-model="newKeep.img"
                 placeholder="Image URL"
                 type="text"
               />
+              <div class="d-flex justify-content-start w-100">
+                <p class="check">Private:</p>
+                <input type="checkbox" v-model="newKeep.isPrivate" class="checkbox mt-2" />
+              </div>
               <button
                 type="submit"
                 class="btn btn-warning"
@@ -74,5 +81,3 @@ export default {
   }
 };
 </script>
-<style>
-</style>

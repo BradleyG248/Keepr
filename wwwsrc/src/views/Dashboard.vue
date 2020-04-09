@@ -21,7 +21,7 @@
       </div>
     </div>
     <div v-if="keep" class="row">
-      <div class="col-6 col-md-3" v-for="keep in keeps" :key="keep.id">
+      <div class="col-6 col-md-4" v-for="keep in keeps" :key="keep.id">
         <keep :keepData="keep" :keepId="keep.id" />
       </div>
     </div>
@@ -50,7 +50,6 @@ export default {
       return this.$store.state.profile;
     },
     keeps() {
-      console.log(this.$store.state.userKeeps);
       return this.$store.state.userKeeps;
     },
     vaults() {
@@ -68,7 +67,7 @@ export default {
   },
   components: {
     keep,
-    edit, 
+    edit,
     vault,
     kcreate,
     vcreate
@@ -77,7 +76,7 @@ export default {
     return {
       editedProfile: {},
       form: false,
-      keep:true
+      keep: true
     };
   }
 };
@@ -87,7 +86,7 @@ export default {
 img.profile {
   max-height: 10rem;
 }
-div h2.clicker:hover{
+div h2.clicker:hover {
   cursor: pointer;
 }
 </style>>

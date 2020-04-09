@@ -24,7 +24,12 @@ namespace Keepr.Services
       {
         throw new Exception("Keep not found");
       }
+      View(Id);
       return keep;
+    }
+    public void View(int KeepId)
+    {
+      _repo.View(KeepId);
     }
     public void Keep(int KeepId)
     {

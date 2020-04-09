@@ -40,7 +40,17 @@ namespace Keepr.Repositories
             keeps = keeps+1
         WHERE id = @Id;
         ";
-        _db.Execute(sql, new{Id});
+      _db.Execute(sql, new { Id });
+    }
+    internal void View(int Id)
+    {
+      string sql = @"
+        UPDATE keeps
+        SET
+            views = views+1
+        WHERE id = @Id;
+        ";
+      _db.Execute(sql, new { Id });
     }
     internal IEnumerable<Keep> GetKeepsByUser(string UserId)
     {

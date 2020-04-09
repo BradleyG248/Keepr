@@ -1,7 +1,9 @@
 <template>
-  <div class="rounded mb-1 p-1 bg-light text-dark d-flex flex-column justify-content-around align-items-center">
+  <div
+    class="rounded mb-1 p-1 bg-light text-dark d-flex flex-column justify-content-around align-items-center"
+  >
     <div v-if="!form" class="align-self-start">
-        <h1 class="keep-title">{{vaultData.name}}</h1>
+      <h1 class="keep-title">{{vaultData.name}}</h1>
       <h3>{{vaultData.description}}</h3>
     </div>
     <div v-else class>
@@ -16,11 +18,13 @@
       </form>
       <button @click="editVault()" type="submit" class="mt-1 btn btn-primary">Submit</button>
     </div>
-      <div class="mt-1 justify-content-around d-flex w-100" v-if="vaultData.userId == profile.userId">
-        <button @click="deleteVault()" class="btn btn-danger mx-1">Delete</button>
-        <button class="btn btn-warning mx-1" @click="form=!form">Edit</button>
-        <router-link :to="{name:'vault', params:{vaultId: vaultData.id}}" >Yeah</router-link>
-      </div>
+    <div class="mt-1 justify-content-around d-flex w-100" v-if="vaultData.userId == profile.userId">
+      <button @click="deleteVault()" class="btn btn-danger mx-1">Delete</button>
+      <button class="btn btn-warning mx-1" @click="form=!form">Edit</button>
+      <router-link :to="{name:'vault', params:{vaultId: vaultData.id}}">
+        <button class="btn btn-primary">View</button>
+      </router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -51,10 +55,9 @@ export default {
       };
       this.form = false;
     },
-    deleteVault(){
+    deleteVault() {
       this.$store.dispatch("deleteVault", this.vaultData.id);
     }
-    
   }
 };
 </script>

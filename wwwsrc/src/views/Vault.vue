@@ -30,7 +30,7 @@ export default {
     vault() {
       return this.$store.state.activeVault;
     },
-    keeps(){
+    keeps() {
       return this.$store.state.userKeeps;
     }
   },
@@ -50,4 +50,4 @@ export default {
 img.profile {
   max-height: 10rem;
 }
-</style>>
+</style>

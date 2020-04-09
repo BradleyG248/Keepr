@@ -36,6 +36,18 @@ namespace Keepr.Controllers
         return BadRequest(e.Message);
       };
     }
+    [HttpGet("{UserId}")]
+    public ActionResult<Profile> GetProfile(string UserId)
+    {
+      try
+      {
+        return Ok(_ps.Get(UserId));
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
     [HttpGet("keeps")]
     [Authorize]
     public ActionResult<IEnumerable<Keep>> GetKeepsByUser()

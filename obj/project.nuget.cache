@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "43Tg2bM1F7QDHCIYGsUZUOF87R1SfwtHEYJqr28ak9q2r6yeZUO4T7YKmLHpqtowhejrOwF9ZWUN5zxmo21QfA==",
+  "dgSpecHash": "50+tVG2UeaLEKTzF8Svk6f+zVXGrTJCT2/nU/SFzRKx9yyUAjtSic0mmIQ+6uyIj5sDTHI22E61PCuLSiw4ERA==",
   "success": true,
-  "projectFilePath": "C:\\source\\codeworks\\Keepr\\keepr.csproj",
+  "projectFilePath": "C:\\source\\codeworks\\keepr\\keepr.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\calvi\\.nuget\\packages\\dapper\\2.0.30\\dapper.2.0.30.nupkg.sha512",
     "C:\\Users\\calvi\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.1\\microsoft.aspnetcore.authentication.jwtbearer.3.1.1.nupkg.sha512",
