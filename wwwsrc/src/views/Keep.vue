@@ -70,7 +70,6 @@ export default {
   },
   computed: {
     keep() {
-      console.log(this.$store.state.activeKeep);
       return this.$store.state.activeKeep;
     },
     profile() {
@@ -80,7 +79,17 @@ export default {
       return this.$store.state.vaults;
     }
   },
-  methods: {},
+  methods: {
+    async setVault() {
+      if (this.vault) {
+        await this.$store.dispatch("setKeepVault", {
+          keepId: this.keep.id,
+          vaultId: this.vault
+        });
+        this.vault = null;
+      }
+    }
+  },
   components: {},
   data() {
     return {
