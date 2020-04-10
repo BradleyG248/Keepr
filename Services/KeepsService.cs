@@ -73,6 +73,11 @@ namespace Keepr.Services
     }
     public string Delete(int Id, string UserId)
     {
+      Keep keep = AuthGet(Id, UserId);
+      if (keep.UserId != UserId)
+      {
+        throw new Exception("That's not your keep.");
+      }
       if (_repo.Delete(Id))
       {
         return "Deleted.";
