@@ -40,10 +40,12 @@ import vault from "../components/Vault";
 import kcreate from "../components/CreateKeep";
 import vcreate from "../components/CreateVault";
 export default {
-  mounted() {
-    this.$store.dispatch("getProfile");
-    this.$store.dispatch("getUserKeeps");
-    this.$store.dispatch("getVaults");
+  async mounted() {
+    if (await this.$auth.isAuthenticated) {
+      this.$store.dispatch("getProfile");
+      this.$store.dispatch("getUserKeeps");
+      this.$store.dispatch("getVaults");
+    }
   },
   computed: {
     profile() {

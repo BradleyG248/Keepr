@@ -22,9 +22,11 @@
 <script>
 import keep from "../components/Keep";
 export default {
-  mounted() {
-    this.$store.dispatch("getVaultById", this.$route.params.vaultId);
-    this.$store.dispatch("getKeepsByVault", this.$route.params.vaultId);
+  async mounted() {
+    if (await this.$auth.isAuthenticated) {
+      this.$store.dispatch("getVaultById", this.$route.params.vaultId);
+      this.$store.dispatch("getKeepsByVault", this.$route.params.vaultId);
+    }
   },
   computed: {
     vault() {

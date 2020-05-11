@@ -30,9 +30,11 @@ export default {
       this.$store.dispatch("logout");
     }
   },
-  mounted() {
-    this.$store.dispatch("getKeeps");
-    this.$store.dispatch("getVaults");
+  async mounted() {
+    if (await this.$auth.isAuthenticated) {
+      this.$store.dispatch("getKeeps");
+      this.$store.dispatch("getVaults");
+    }
   },
   components: {
     keep

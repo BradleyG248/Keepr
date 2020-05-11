@@ -64,9 +64,11 @@
 export default {
   name: "KeepView",
   async mounted() {
-    await this.$store.dispatch("getKeepById", this.$route.params.keepId);
-    this.$store.dispatch("getProfileById", this.keep.userId);
-    this.$store.dispatch("getVaults");
+    if (await this.$auth.isAuthenticated) {
+      await this.$store.dispatch("getKeepById", this.$route.params.keepId);
+      this.$store.dispatch("getProfileById", this.keep.userId);
+      this.$store.dispatch("getVaults");
+    }
   },
   computed: {
     keep() {
