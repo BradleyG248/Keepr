@@ -32,9 +32,9 @@ export default {
   },
   async mounted() {
     if (await this.$auth.isAuthenticated) {
-      this.$store.dispatch("getKeeps");
       this.$store.dispatch("getVaults");
     }
+    this.$store.dispatch("getKeeps");
   },
   components: {
     keep
